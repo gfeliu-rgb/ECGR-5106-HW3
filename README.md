@@ -6,8 +6,8 @@ Sequence-to-sequence machine translation implementation for the Homework 3 Engli
 
 - `src/seq2seq_hw3.py`: complete PyTorch training, evaluation, BLEU-4, exact-match, plotting, and attention-map code.
 - `data/vast_english_french.txt`: provided assignment dataset used for all experiments.
-- `results/`: generated CSV metrics, qualitative samples, and deterministic split indices.
-- `plots/`: generated training/validation loss curves and attention visualizations.
+- `results/`: generated CSV metrics, qualitative samples, deterministic split indices, and comparison tables.
+- `plots/`: generated training/validation loss curves, attention visualizations, and comparison plots.
 - `report/homework3_report.pdf`: final report submitted to Canvas.
 - `report/homework3_report.md`: Markdown source for the report text.
 - `SUBMISSION_CHECKLIST.md`: final Canvas/GitHub verification checklist.
