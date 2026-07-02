@@ -1,0 +1,6 @@
+source,reference,prediction,exact_match,sentence_bleu4,char_accuracy,sequence_similarity
+je peux voir un grand navire de croisiere au loin,i can see a large cruise ship in the distance,i see a a a ship the,0,0.1894,0.1333,0.5846
+elle cherche son chien perdu,she is looking for her lost dog,she is looking for her,0,0.6703,0.7097,0.8302
+il a fini ses devoirs rapidement,he finished his homework quickly,he cleans his his his bicycle,0,0.2445,0.0938,0.4918
+nous preferons nous promener dans les jardins botaniques calmes,we prefer walking through the quiet botanical gardens,we are going to the the the,0,0.1782,0.0943,0.5000
+ils visitent souvent des musees,they visit museums often,they often talk about modern,0,0.3021,0.2500,0.3846

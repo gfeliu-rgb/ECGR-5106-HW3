@@ -1,0 +1,6 @@
+source,reference,prediction,exact_match,sentence_bleu4,char_accuracy,sequence_similarity
+i can see a large cruise ship in the distance,je peux voir un grand navire de croisiere au loin,je veux une une de de la,0,0.1339,0.2041,0.4932
+she is looking for her lost dog,elle cherche son chien perdu,elle a des des pour,0,0.2730,0.2143,0.4681
+he finished his homework quickly,il a fini ses devoirs rapidement,il a la chimie de,0,0.2942,0.1562,0.4490
+we prefer walking through the quiet botanical gardens,nous preferons nous promener dans les jardins botaniques calmes,nous avons visite le lever de la,0,0.1396,0.1111,0.4000
+they visit museums often,ils visitent souvent des musees,ils parlent souvent de,0,0.3097,0.1290,0.6792
