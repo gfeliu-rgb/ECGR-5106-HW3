@@ -44,6 +44,14 @@ Training and validation cross-entropy losses are plotted in `plots/problem1_base
 
 The sample translations in `results/problem1_baseline_en_fr_samples.csv` show the main weakness of the baseline. It learned some frequent French sentence patterns, but it often fell back to common fragments instead of producing the full target sentence. For example, for `they visit museums often`, the target was `ils visitent souvent des musees`, while the model predicted `ils parlent souvent de`. That prediction is not correct, but it shares enough structure to produce nonzero BLEU and sequence-similarity scores.
 
+| English source | Target French | Predicted French | Exact | BLEU-4 |
+|---|---|---|---:|---:|
+| i can see a large cruise ship in the distance | je peux voir un grand navire de croisiere au loin | je veux une une de de la | 0 | 0.1339 |
+| she is looking for her lost dog | elle cherche son chien perdu | elle a des des pour | 0 | 0.2730 |
+| he finished his homework quickly | il a fini ses devoirs rapidement | il a la chimie de | 0 | 0.2942 |
+| we prefer walking through the quiet botanical gardens | nous preferons nous promener dans les jardins botaniques calmes | nous avons visite le lever de la | 0 | 0.1396 |
+| they visit museums often | ils visitent souvent des musees | ils parlent souvent de | 0 | 0.3097 |
+
 ## Problem 2: GRU Encoder-Decoder with Luong Attention
 
 ### Architecture
@@ -77,6 +85,16 @@ Attention improved the English-to-French model on the main BLEU-4 metric: word B
 
 The attention maps in `plots/problem2_attention_en_fr_attention_1.png` and `plots/problem2_attention_en_fr_attention_2.png` visualize the decoder's source-token focus during generation.
 
+| English source | Target French | Predicted French | Exact | BLEU-4 |
+|---|---|---|---:|---:|
+| i can see a large cruise ship in the distance | je peux voir un grand navire de croisiere au loin | ils ont dans un navire au | 0 | 0.1349 |
+| she is looking for her lost dog | elle cherche son chien perdu | elle cherche des contrats pour | 0 | 0.3593 |
+| he finished his homework quickly | il a fini ses devoirs rapidement | il ecrit des scenarios | 0 | 0.2179 |
+| we prefer walking through the quiet botanical gardens | nous preferons nous promener dans les jardins botaniques calmes | nous avons traverse la sur le parc | 0 | 0.1396 |
+| they visit museums often | ils visitent souvent des musees | ils ont de la | 0 | 0.2798 |
+
+The attention maps were not perfectly sharp. I interpret them as qualitative evidence that the model used source-position information, not as proof of clean word-by-word alignment. This matches the metric results: attention improved BLEU-4 and validation loss, but the generated sentences still contained repeated or misplaced high-frequency phrases.
+
 ## Problem 3: Reversed French-to-English Translation
 
 ### Baseline GRU Architecture
@@ -95,6 +113,14 @@ Validation metrics:
 
 Qualitative samples are saved in `results/problem3_baseline_fr_en_samples.csv`.
 
+| French source | Target English | Predicted English | Exact | BLEU-4 |
+|---|---|---|---:|---:|
+| je peux voir un grand navire de croisiere au loin | i can see a large cruise ship in the distance | i want a a a the of | 0 | 0.1439 |
+| elle cherche son chien perdu | she is looking for her lost dog | she is looking for a | 0 | 0.5093 |
+| il a fini ses devoirs rapidement | he finished his homework quickly | he writes his for a | 0 | 0.3021 |
+| nous preferons nous promener dans les jardins botaniques calmes | we prefer walking through the quiet botanical gardens | we are going to the the | 0 | 0.1752 |
+| ils visitent souvent des musees | they visit museums often | they often talk about | 0 | 0.3976 |
+
 ### Attention GRU Architecture
 
 The reversed attention model used the same Luong attention mechanism as Problem 2, again with French as the source and English as the target.
@@ -110,6 +136,14 @@ Validation metrics:
 - Sequence similarity: **0.4697**
 
 Qualitative samples are saved in `results/problem3_attention_fr_en_samples.csv`. Attention maps are saved in `plots/problem3_attention_fr_en_attention_1.png` and `plots/problem3_attention_fr_en_attention_2.png`.
+
+| French source | Target English | Predicted English | Exact | BLEU-4 |
+|---|---|---|---:|---:|
+| je peux voir un grand navire de croisiere au loin | i can see a large cruise ship in the distance | i see a a a ship the | 0 | 0.1894 |
+| elle cherche son chien perdu | she is looking for her lost dog | she is looking for her | 0 | 0.6703 |
+| il a fini ses devoirs rapidement | he finished his homework quickly | he cleans his his his bicycle | 0 | 0.2445 |
+| nous preferons nous promener dans les jardins botaniques calmes | we prefer walking through the quiet botanical gardens | we are going to the the the | 0 | 0.1782 |
+| ils visitent souvent des musees | they visit museums often | they often talk about modern | 0 | 0.3021 |
 
 ### Synthesis Discussion
 
