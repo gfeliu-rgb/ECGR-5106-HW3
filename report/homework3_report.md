@@ -7,11 +7,11 @@
 
 ## Dataset and Experimental Setup
 
-The provided `vast_english_french.txt` dataset contains 555 English/French sentence pairs. I used one deterministic 80/20 split with random seed `4106`, giving 444 training pairs and 111 validation pairs. The split indices are saved in `results/split_indices.json` and the same validation rows are reused for all English-to-French and French-to-English experiments.
+The provided `vast_english_french.txt` dataset contains 555 English/French sentence pairs. I used one deterministic 80/20 split with random seed `4106`, giving 444 training pairs and 111 validation pairs. I saved the split indices in `results/split_indices.json` so I could verify that the English-to-French and French-to-English experiments were evaluated on the same underlying examples.
 
 Text was normalized by lowercasing, removing accent marks, separating punctuation, and collapsing whitespace. Each vocabulary included `<pad>`, `<sos>`, `<eos>`, and `<unk>` tokens. Models were trained with token-level cross-entropy loss, Adam optimization, gradient clipping, teacher forcing during training, and greedy decoding during validation.
 
-The main rubric metrics are traditional exact sequence accuracy and corpus-level word BLEU-4. I also tracked character BLEU-4, character accuracy, and sequence similarity to support qualitative comparison.
+The two rubric metrics are traditional exact sequence accuracy and corpus-level word BLEU-4. I also tracked character BLEU-4, character accuracy, and sequence similarity because exact match alone was too strict to explain the partial translations.
 
 ## Problem 1: Baseline GRU Encoder-Decoder
 
@@ -42,7 +42,7 @@ Training and validation cross-entropy losses are plotted in `plots/problem1_base
 
 ### Qualitative Validation
 
-The sample translations in `results/problem1_baseline_en_fr_samples.csv` show that the baseline learned some frequent French sentence structure and common words, but it usually did not reproduce the complete target sentence exactly. For example, the model produced partial overlaps such as `ils parlent souvent de` for a sentence whose target was `ils visitent souvent des musees`. This explains why exact-match accuracy is 0 while BLEU and sequence-similarity scores are nonzero.
+The sample translations in `results/problem1_baseline_en_fr_samples.csv` show the main weakness of the baseline. It learned some frequent French sentence patterns, but it often fell back to common fragments instead of producing the full target sentence. For example, for `they visit museums often`, the target was `ils visitent souvent des musees`, while the model predicted `ils parlent souvent de`. That prediction is not correct, but it shares enough structure to produce nonzero BLEU and sequence-similarity scores.
 
 ## Problem 2: GRU Encoder-Decoder with Luong Attention
 
@@ -73,7 +73,7 @@ Training and validation cross-entropy losses are plotted in `plots/problem2_atte
 
 ### Comparative Analysis
 
-Attention improved the English-to-French model on the main BLEU-4 metric: word BLEU-4 increased from **0.0276** to **0.0589**. The best validation loss also improved from **5.2227** to **5.0146**. Traditional exact sequence accuracy stayed at **0.0000** for both models because exact match requires every generated word to match the reference sentence perfectly. BLEU-4 is less strict because it gives partial credit for overlapping n-grams, so a model can improve BLEU even when no entire sentence is exactly correct.
+Attention improved the English-to-French model on the main BLEU-4 metric: word BLEU-4 increased from **0.0276** to **0.0589**. The best validation loss also improved from **5.2227** to **5.0146**. Traditional exact sequence accuracy stayed at **0.0000** for both models. This happened because the validation sentences require a full word-for-word match; a sentence can contain several useful translated words and still fail exact match because one word is missing, repeated, or in the wrong position.
 
 The attention maps in `plots/problem2_attention_en_fr_attention_1.png` and `plots/problem2_attention_en_fr_attention_2.png` visualize the decoder's source-token focus during generation.
 
@@ -119,4 +119,4 @@ French-to-English appeared easier for the attention model to optimize because it
 
 ## Conclusion
 
-The baseline GRU encoder-decoder established a working sequence-to-sequence translation pipeline, but it struggled to generate complete exact matches. Adding Luong attention improved validation loss, BLEU-4, character BLEU-4, and sequence similarity in both directions. The reversed French-to-English attention model performed best overall by validation loss and BLEU-4, suggesting that this direction was slightly easier for the network under the selected hyperparameters.
+The baseline GRU encoder-decoder produced a working translation pipeline, but the generated sentences were usually incomplete or mixed with high-frequency phrase fragments. Adding Luong attention gave the decoder better access to the source sentence and improved validation loss, BLEU-4, character BLEU-4, and sequence similarity in both directions. The reversed French-to-English attention model performed best overall by validation loss and BLEU-4, so I concluded that this direction was slightly easier for this network and dataset split.
