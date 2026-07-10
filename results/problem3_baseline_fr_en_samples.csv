@@ -1,6 +1,6 @@
 source,reference,prediction,exact_match,sentence_bleu4,char_accuracy,sequence_similarity
-je peux voir un grand navire de croisiere au loin,i can see a large cruise ship in the distance,i want a a a the of,0,0.1439,0.0889,0.4375
-elle cherche son chien perdu,she is looking for her lost dog,she is looking for a,0,0.5093,0.6129,0.7451
+je peux voir un grand navire de croisiere au loin,i can see a large cruise ship in the distance,i want a a a the the,0,0.1439,0.0889,0.4923
+elle cherche son chien perdu,she is looking for her lost dog,she wears a a for her,0,0.2644,0.1290,0.5385
 il a fini ses devoirs rapidement,he finished his homework quickly,he writes his for a,0,0.3021,0.0938,0.5098
 nous preferons nous promener dans les jardins botaniques calmes,we prefer walking through the quiet botanical gardens,we are going to the the,0,0.1752,0.0943,0.4737
 ils visitent souvent des musees,they visit museums often,they often talk about,0,0.3976,0.2500,0.4444
